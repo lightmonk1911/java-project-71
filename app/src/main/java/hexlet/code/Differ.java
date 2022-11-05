@@ -4,13 +4,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Differ {
     private static final ObjectMapper mapper = new ObjectMapper();
 
-    public static String generate(String was, String now) throws JsonProcessingException {
+    public static String generate(String was, String now) throws Exception {
         Map wasProperties = mapper.readValue(was, Map.class);
         Map nowProperties = mapper.readValue(now, Map.class);
 

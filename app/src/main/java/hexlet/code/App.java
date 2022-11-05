@@ -1,7 +1,5 @@
 package hexlet.code;
 
-import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -16,7 +14,12 @@ import picocli.CommandLine.Parameters;
         description = "Compares two configuration files and shows a difference.")
 class App implements Callable<String> {
 
-    @Option(names = { "-f", "--format" }, paramLabel = "format", description = "output format [default: ${DEFAULT-VALUE}]", defaultValue = "stylish")
+    @Option(
+            names = {"-f", "--format"},
+            paramLabel = "format",
+            description = "output format [default: ${DEFAULT-VALUE}]",
+            defaultValue = "stylish"
+    )
     String format;
 
     @Parameters(paramLabel = "filepath1", description = "path to first file")
@@ -26,7 +29,7 @@ class App implements Callable<String> {
     String filepath2;
 
     @Override
-    public String call() throws IOException {
+    public String call() throws Exception {
         System.out.println("Hello, world! filepath1 = " + filepath1 + " filepath2 = " + filepath2);
         System.out.println("format = " + format);
 
