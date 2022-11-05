@@ -7,11 +7,11 @@ import java.util.TreeSet;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Differ {
-    private static final ObjectMapper mapper = new ObjectMapper();
+    private static final ObjectMapper MAPPER = new ObjectMapper();
 
     public static String generate(String was, String now) throws Exception {
-        Map wasProperties = mapper.readValue(was, Map.class);
-        Map nowProperties = mapper.readValue(now, Map.class);
+        Map wasProperties = MAPPER.readValue(was, Map.class);
+        Map nowProperties = MAPPER.readValue(now, Map.class);
 
         Set<String> keysOfBoth = new TreeSet<>();
         keysOfBoth.addAll(wasProperties.keySet());
