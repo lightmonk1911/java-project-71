@@ -33,6 +33,6 @@ jobs:
         distribution: 'temurin'
     - name: Build
       uses: gradle/gradle-build-action@v2
-      working-directory: ./app
       with:
         arguments: build
+        working-directory: ./app
