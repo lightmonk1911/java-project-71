@@ -7,10 +7,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 
 public class Differ {
-    private static final ObjectMapper MAPPER = new ObjectMapper();
+
 
     public static String generate(String filePath1, String filePath2) throws Exception {
         Path path1 = Paths.get(filePath1).toAbsolutePath().normalize();
@@ -19,8 +19,11 @@ public class Differ {
         Path path2 = Paths.get(filePath2).toAbsolutePath().normalize();
         String now = Files.readString(path2);
 
-        Map wasProperties = MAPPER.readValue(was, Map.class);
-        Map nowProperties = MAPPER.readValue(now, Map.class);
+        String wasExtension = getExtension(filePath1);
+        String nowExtension = getExtension(filePath2);
+
+        Map wasProperties = Parser.parse(was, wasExtension);
+        Map nowProperties = Parser.parse(now, nowExtension);
 
         Set<String> keysOfBoth = new TreeSet<>();
         keysOfBoth.addAll(wasProperties.keySet());
@@ -68,5 +71,17 @@ public class Differ {
 
     private static void appendLine(StringBuilder builder, String key, Object value) {
         appendLine(builder, key, value, " ");
+    }
+
+    private static String getExtension(String path) {
+        if (path.endsWith("json")) {
+            return "json";
+        }
+
+        if (path.endsWith("yml") || path.endsWith("yaml")) {
+            return "yaml";
+        }
+
+        throw new IllegalStateException("We don't support such extension: " + path);
     }
 }
