@@ -1,5 +1,8 @@
 package hexlet.code;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -9,7 +12,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class Differ {
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
-    public static String generate(String was, String now) throws Exception {
+    public static String generate(String filePath1, String filePath2) throws Exception {
+        Path path1 = Paths.get(filePath1).toAbsolutePath().normalize();
+        String was = Files.readString(path1);
+
+        Path path2 = Paths.get(filePath2).toAbsolutePath().normalize();
+        String now = Files.readString(path2);
+
         Map wasProperties = MAPPER.readValue(was, Map.class);
         Map nowProperties = MAPPER.readValue(now, Map.class);
 

@@ -30,18 +30,8 @@ class App implements Callable<String> {
 
     @Override
     public String call() throws Exception {
-        System.out.println("Hello, world! filepath1 = " + filepath1 + " filepath2 = " + filepath2);
-        System.out.println("format = " + format);
-
-        Path path1 = Paths.get(filepath1).toAbsolutePath().normalize();
-        String was = Files.readString(path1);
-
-        Path path2 = Paths.get(filepath2).toAbsolutePath().normalize();
-        String now = Files.readString(path2);
-
-        System.out.println(Differ.generate(was, now));
-
-        return "";
+        System.out.println(Differ.generate(filepath1, filepath2));
+        return null;
     }
 
     public static void main(String... args) {
