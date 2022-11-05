@@ -34,7 +34,9 @@ jobs:
         arguments: build
         build-root-directory: ./app
     - name: Test & publish code coverage
-      uses: paambaati/codeclimate-action@v2.7.1
+      uses: paambaati/codeclimate-action@v3.1.1
+    - name: check wd
+      run: echo ${{github.workspace}}
       env:
         CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
       with:
