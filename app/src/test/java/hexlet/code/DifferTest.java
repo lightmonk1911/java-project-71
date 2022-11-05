@@ -30,4 +30,20 @@ public class DifferTest {
         String result = Differ.generate(wasFilePath, nowFilePath);
         assertEquals(result, expected);
     }
+
+    @Test
+    public void testEmpty() throws Exception {
+        String path = "src/test/resources/fixtures";
+
+        File file = new File(path);
+        String fixturesPath = file.getAbsolutePath();
+
+        String wasFilePath = fixturesPath + "/empty.json";
+        String nowFilePath = fixturesPath + "/empty.json";
+
+        String expected = "{}";
+
+        String result = Differ.generate(wasFilePath, nowFilePath);
+        assertEquals(result, expected);
+    }
 }
