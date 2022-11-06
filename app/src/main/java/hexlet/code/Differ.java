@@ -24,6 +24,10 @@ public class Differ {
         return Formatter.format(diff, formatName);
     }
 
+    public static String generate(String filePath1, String filePath2) throws Exception {
+        return generate(filePath1, filePath2, "stylish");
+    }
+
     private static String getExtension(String path) {
         if (path.endsWith("json")) {
             return "json";
