@@ -1,6 +1,6 @@
 package hexlet.code;
 
-public class LineDiff {
+public final class LineDiff {
 
     public Object getWas() {
         return was;
@@ -18,9 +18,9 @@ public class LineDiff {
     private Object now;
     private LineDiffState state;
 
-    LineDiff(Object was, Object now, LineDiffState state) {
-        this.was = was;
-        this.now = now;
-        this.state = state;
+    LineDiff(Object wasValue, Object nowValue, LineDiffState stateValue) {
+        this.was = wasValue;
+        this.now = nowValue;
+        this.state = stateValue;
     }
 }

@@ -17,13 +17,13 @@ class App implements Callable<String> {
             description = "output format [default: ${DEFAULT-VALUE}]",
             defaultValue = "stylish"
     )
-    String format;
+    private String format;
 
     @Parameters(paramLabel = "filepath1", description = "path to first file")
-    String filepath1;
+    private String filepath1;
 
     @Parameters(paramLabel = "filepath2", description = "path to second file")
-    String filepath2;
+    private String filepath2;
 
     @Override
     public String call() throws Exception {
