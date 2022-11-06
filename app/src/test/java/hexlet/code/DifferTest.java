@@ -48,7 +48,7 @@ public class DifferTest {
     }
 
     @Test
-    public void testYAMLwithProps() throws Exception {
+    public void testYAMLWithProps() throws Exception {
         String path = "src/test/resources/fixtures";
 
         File file = new File(path);
