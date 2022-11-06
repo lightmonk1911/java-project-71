@@ -6,7 +6,7 @@ import java.nio.file.Paths;
 import java.util.Map;
 
 public class Differ {
-    public static String generate(String filePath1, String filePath2, String formatter) throws Exception {
+    public static String generate(String filePath1, String filePath2, String formatName) throws Exception {
         Path path1 = Paths.get(filePath1).toAbsolutePath().normalize();
         String was = Files.readString(path1);
 
@@ -21,11 +21,7 @@ public class Differ {
 
         Difference diff = new Difference(wasProperties, nowProperties);
 
-        if ("stylish".equals(formatter)) {
-            return StylishFormatter.format(diff);
-        }
-
-        throw new IllegalStateException("Unknown formatter: " + formatter);
+        return Formatter.format(diff, formatName);
     }
 
     private static String getExtension(String path) {

@@ -1,4 +1,6 @@
-package hexlet.code;
+package hexlet.code.formatters;
+
+import hexlet.code.Difference;
 
 public class StylishFormatter {
     public static String format(Difference difference) {

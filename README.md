@@ -5,4 +5,4 @@
 [![build](https://github.com/lightmonk1911/java-project-71/actions/workflows/build.yml/badge.svg)](https://github.com/lightmonk1911/java-project-71/actions/workflows/build.yml)
 
 ### How to use
-[![asciicast](https://asciinema.org/a/vJXlUHL7i9CBfYE8cj95OeTw4.svg)](https://asciinema.org/a/vJXlUHL7i9CBfYE8cj95OeTw4)
+[![asciicast](https://asciinema.org/a/0eqrvbfQDYzaaHxQm3aGiMYZL.svg)](https://asciinema.org/a/0eqrvbfQDYzaaHxQm3aGiMYZL)
