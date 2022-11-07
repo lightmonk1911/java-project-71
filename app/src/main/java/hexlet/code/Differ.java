@@ -13,8 +13,8 @@ public class Differ {
         Path path2 = Paths.get(filePath2).toAbsolutePath().normalize();
         String now = Files.readString(path2);
 
-        String wasExtension = getExtension(filePath1);
-        String nowExtension = getExtension(filePath2);
+        String wasExtension = getDataFormat(filePath1);
+        String nowExtension = getDataFormat(filePath2);
 
         Map wasProperties = Parser.parse(was, wasExtension);
         Map nowProperties = Parser.parse(now, nowExtension);
@@ -28,15 +28,10 @@ public class Differ {
         return generate(filePath1, filePath2, "stylish");
     }
 
-    private static String getExtension(String path) {
-        if (path.endsWith("json")) {
-            return "json";
-        }
-
-        if (path.endsWith("yml") || path.endsWith("yaml")) {
-            return "yaml";
-        }
-
-        throw new IllegalStateException("We don't support such extension: " + path);
+    private static String getDataFormat(String filePath) {
+        int index = filePath.lastIndexOf('.');
+        return index > 0
+                ? filePath.substring(index + 1)
+                : "";
     }
 }

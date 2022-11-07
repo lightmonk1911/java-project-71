@@ -19,17 +19,13 @@ public class Difference extends TreeMap<String, LineDiff> {
 
     private LineDiffState getLineState(Map was, Map now, String key) {
         if (was.containsKey(key) && now.containsKey(key) && Objects.equals(was.get(key), now.get(key))) {
-            return LineDiffState.NOT_CHANGED;
-        }
-
-        if (!was.containsKey(key) && now.containsKey(key)) {
+            return LineDiffState.UNCHANGED;
+        } else if (!was.containsKey(key) && now.containsKey(key)) {
             return LineDiffState.ADDED;
-        }
-
-        if (was.containsKey(key) && !now.containsKey(key)) {
+        } else if (was.containsKey(key) && !now.containsKey(key)) {
             return LineDiffState.REMOVED;
+        } else {
+            return LineDiffState.CHANGED;
         }
-
-        return LineDiffState.CHANGED;
     }
 }

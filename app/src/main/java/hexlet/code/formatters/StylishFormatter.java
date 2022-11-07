@@ -18,7 +18,7 @@ public class StylishFormatter {
                 }
                 case REMOVED -> appendLine(builder, entry.getKey(), entry.getValue().getWas(), "-");
                 case ADDED -> appendLine(builder, entry.getKey(), entry.getValue().getNow(), "+");
-                case NOT_CHANGED -> appendLine(builder, entry.getKey(), entry.getValue().getWas());
+                case UNCHANGED -> appendLine(builder, entry.getKey(), entry.getValue().getWas());
                 default -> throw new IllegalStateException("Unexpected state: " + entry.getValue().getState());
             }
         }

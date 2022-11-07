@@ -25,7 +25,7 @@ public class PlainFormatter {
                         + "' was added with value: "
                         + normalizeValue(entry.getValue().getNow())
                         + "\n");
-                case NOT_CHANGED -> {
+                case UNCHANGED -> {
                 }
                 default -> throw new IllegalStateException("Unexpected state: " + entry.getValue().getState());
             }
