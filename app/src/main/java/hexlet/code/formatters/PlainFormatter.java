@@ -8,7 +8,14 @@ import hexlet.code.Difference;
 public class PlainFormatter {
     public static String format(Difference difference) {
         StringBuilder builder = new StringBuilder();
+
         for (var entry : difference.entrySet()) {
+            if (entry.getValue() == null) {
+                throw new IllegalArgumentException(
+                        "Incorrect difference argument: value for key '" + entry.getKey() + "' can't be null"
+                );
+            }
+
             switch (entry.getValue().getState()) {
                 case CHANGED -> {
                     String nowValue = normalizeValue(entry.getValue().getNow());
