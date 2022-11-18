@@ -1,6 +1,5 @@
 package hexlet.code;
 
-import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -13,107 +12,84 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public final class DifferTest {
+    private static String resultJson;
+    private static String resultPlain;
+    private static String resultStylish;
+    private static String sourceJson1;
+    private static String sourceJson2;
+    private static String sourceYaml1;
+    private static String sourceYaml2;
 
-    private String fixturesPath;
+    private static Path getFixturePath(String fileName) {
+        return Paths.get("src", "test", "resources", "fixtures", fileName)
+                .toAbsolutePath().normalize();
+    }
+
+    private static String getFixturePathString(String fileName) {
+        return getFixturePath(fileName).toString();
+    }
+
+    private static String readFixture(String fileName) throws Exception {
+        Path filePath = getFixturePath(fileName);
+        return Files.readString(filePath).trim();
+    }
 
     @BeforeAll
-    public void init() {
-        String path = "src/test/resources/fixtures";
-
-        File file = new File(path);
-        fixturesPath = file.getAbsolutePath();
+    public static void beforeAll() throws Exception {
+        resultJson = readFixture("result_json.json");
+        resultPlain = readFixture("result_plain.txt");
+        resultStylish = readFixture("result_stylish.txt");
+        sourceJson1 = getFixturePathString("source_json_1.json");
+        sourceJson2 = getFixturePathString("source_json_2.json");
+        sourceYaml1 = getFixturePathString("source_yaml_1.yml");
+        sourceYaml2 = getFixturePathString("source_yaml_2.yml");
     }
 
     @Test
-    public void testJSONWithProps() throws Exception {
-        String wasFilePath = fixturesPath + "/file1.json";
-        String nowFilePath = fixturesPath + "/file2.json";
-
-        String expected = "{\n"
-                + "    chars1: [a, b, c]\n"
-                + "  - chars2: [d, e, f]\n"
-                + "  + chars2: false\n"
-                + "  - checked: false\n"
-                + "  + checked: true\n"
-                + "  - default: null\n"
-                + "  + default: [value1, value2]\n"
-                + "  - id: 45\n"
-                + "  + id: null\n"
-                + "  - key1: value1\n"
-                + "  + key2: value2\n"
-                + "    numbers1: [1, 2, 3, 4]\n"
-                + "  - numbers2: [2, 3, 4, 5]\n"
-                + "  + numbers2: [22, 33, 44, 55]\n"
-                + "  - numbers3: [3, 4, 5]\n"
-                + "  + numbers4: [4, 5, 6]\n"
-                + "  + obj1: {nestedKey=value, isNested=true}\n"
-                + "  - setting1: Some value\n"
-                + "  + setting1: Another value\n"
-                + "  - setting2: 200\n"
-                + "  + setting2: 300\n"
-                + "  - setting3: true\n"
-                + "  + setting3: none\n"
-                + "}";
-
-        String result = Differ.generate(wasFilePath, nowFilePath, "stylish");
-        assertEquals(expected, result);
+    void testJSONWithStylishFormatter() throws Exception {
+        String result = Differ.generate(sourceJson1, sourceJson2, "stylish");
+        assertEquals(resultStylish, result);
     }
 
     @Test
-    public void testEmptyJSON() throws Exception {
-        String wasFilePath = fixturesPath + "/empty.json";
-        String nowFilePath = fixturesPath + "/empty.json";
-
-        String expected = "{}";
-
-        String result = Differ.generate(wasFilePath, nowFilePath, "stylish");
-        assertEquals(expected, result);
+    void testJsonWithJsonFormatter() throws Exception {
+        String result = Differ.generate(sourceJson1, sourceJson2, "json");
+        assertEquals(resultJson, result);
     }
 
     @Test
-    public void testYAMLWithProps() throws Exception {
-        String wasFilePath = fixturesPath + "/file1.yml";
-        String nowFilePath = fixturesPath + "/file2.yml";
-
-        Path resultPath = Paths.get(fixturesPath + "/result_stylish.txt").toAbsolutePath().normalize();
-        String expected = Files.readString(resultPath);
-
-        String result = Differ.generate(wasFilePath, nowFilePath, "stylish");
-        assertEquals(expected, result);
+    void testJsonWithPlainFormatter() throws Exception {
+        String result = Differ.generate(sourceJson1, sourceJson2, "plain");
+        assertEquals(resultPlain, result);
     }
 
     @Test
-    public void testEmptyYAML() throws Exception {
-        String wasFilePath = fixturesPath + "/empty.yml";
-        String nowFilePath = fixturesPath + "/empty.yml";
-
-        String expected = "{}";
-
-        String result = Differ.generate(wasFilePath, nowFilePath, "stylish");
-        assertEquals(expected, result);
+    void testJsonWithDefaultFormatter() throws Exception {
+        String result = Differ.generate(sourceJson1, sourceJson2);
+        assertEquals(resultStylish, result);
     }
 
     @Test
-    public void testYAMLWithPropsPlain() throws Exception {
-        String wasFilePath = fixturesPath + "/file1.yml";
-        String nowFilePath = fixturesPath + "/file2.yml";
-
-        Path resultPath = Paths.get(fixturesPath + "/result_plain.txt").toAbsolutePath().normalize();
-        String expected = Files.readString(resultPath);
-
-        String result = Differ.generate(wasFilePath, nowFilePath, "plain");
-        assertEquals(expected, result);
+    void testYamlWithStylishFormatter() throws Exception {
+        String result = Differ.generate(sourceYaml1, sourceYaml2, "stylish");
+        assertEquals(resultStylish, result);
     }
 
     @Test
-    public void testJSONWithPropsToJSON() throws Exception {
-        String wasFilePath = fixturesPath + "/file1.yml";
-        String nowFilePath = fixturesPath + "/file2.yml";
+    void testYamlWithJsonFormatter() throws Exception {
+        String result = Differ.generate(sourceYaml1, sourceYaml2, "json");
+        assertEquals(resultJson, result);
+    }
 
-        Path resultPath = Paths.get(fixturesPath + "/result.json").toAbsolutePath().normalize();
-        String expected = Files.readString(resultPath);
+    @Test
+    void testYamlWithPlainFormatter() throws Exception {
+        String result = Differ.generate(sourceYaml1, sourceYaml2, "plain");
+        assertEquals(resultPlain, result);
+    }
 
-        String result = Differ.generate(wasFilePath, nowFilePath, "json");
-        assertEquals(expected, result);
+    @Test
+    void testYamlWithDefaultFormatter() throws Exception {
+        String result = Differ.generate(sourceYaml1, sourceYaml2);
+        assertEquals(resultStylish, result);
     }
 }
